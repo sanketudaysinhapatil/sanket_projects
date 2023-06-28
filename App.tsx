@@ -10,7 +10,7 @@ function App (){
     <View>
       
       
-      <Login/>
+      <Text>COntact</Text>
       
     </View>
   )
