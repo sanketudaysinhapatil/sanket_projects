@@ -10,100 +10,37 @@ import React, {useEffect, useState} from 'react';
 
 const App = () => {
   const [products, setProducts] = useState([
-    {
-      data: [1, 1, 1, 1, 1],
-      isSelected: false,
-    },
-    {
-      data: [1, 1, 1, 1, 1],
-      isSelected: false,
-    },
-    {
-      data: [1, 1, 1, 1, 1],
-      isSelected: false,
-    },
+    {title: 'Post 1', isBlocked: false},
+    {title: 'Post 2', isBlocked: true},
+    {title: 'Post 3', isBlocked: false},
+    {title: 'Post 4', isBlocked: true},
   ]);
-
-  const handleEvent = index => {
-    let tempData = products;
-    tempData.map((item, ind) => {
-      if (index === ind) {
-        item.isSelected = !item.isSelected;
-      } else {
-        item.isSelected = false;
-      }
-    });
-    let temp = [];
-    tempData.map(item => {
-      temp.push(item);
-    });
-    setProducts(temp);
-  };
 
   return (
     <View style={styles.container}>
       <Text style={{fontSize: 25, textAlign: 'center', color: 'red'}}>
-        Extended  List
+        MultiView Flag List
       </Text>
       <View>
         <FlatList
           data={products}
           renderItem={({item, index}) => {
             return (
-              <TouchableOpacity
-                style={styles.itemView}
-                onPress={() => {
-                  handleEvent(index);
-                }}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: 'blue',
-                    fontWeight: '700',
-                    textAlign: 'center',
+              <View style={{width:"100%"}}>
+                {item.isBlocked ?(<View style={{
+                    width:"90%",
+                    height:200,
+                    justifyContent:"center",
+                    backgroundColor:"grey"
                   }}>
-                  {`item ` + (index + 1)}
-                </Text>
-
-                {item.isSelected && (
-                  <FlatList
-                    data={item.data}
-                    renderItem={({item, index}) => {
-                      return (
-                        <View style={{margin: 5}}>
-                          <Text style={{fontSize: 18, color: 'orange'}}>
-                            {'sub item ' + (index + 1)}
-                          </Text>
-                        </View>
-                      );
-                    }}
-                  />
+                    <Text style={{color:"red"}}>*Blocked</Text>
+                  </View>): (
+                  <View>
+                    <Text style={styles.itemView}>I Am Not Blocked</Text>
+                  </View>
                 )}
-
-                {item.isSelected ? (
-                  <Image
-                    source={require('./Images/up.png')}
-                    style={{
-                      height: 20,
-                      width: 20,
-                      position: 'absolute',
-                      top: 20,
-                      right: 20,
-                    }}
-                  />
-                ) : (
-                  <Image
-                    source={require('./Images/down.png')}
-                    style={{
-                      height: 20,
-                      width: 20,
-                      position: 'absolute',
-                      top: 20,
-                      right: 20,
-                    }}
-                  />
-                )}
-              </TouchableOpacity>
+                
+              </View>
             );
           }}
         />
@@ -118,17 +55,14 @@ const styles = StyleSheet.create({
   },
   itemView: {
     width: '90%',
-
+    marginTop:20,
     backgroundColor: '#fff',
     marginBottom: 10,
-
     marginLeft: 10,
     padding: 20,
-
     flex: 1,
     elevation: 5,
     borderRadius: 10,
-
     padding: 10,
   },
   card: {
