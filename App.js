@@ -1,16 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
-import Header from './components/Header'
+
 import Todo from './components/Todo'
+import Header from './components/Headerss'
+
+
 
 const App = () => {
   return (
-    <View >
-      <Header/>
+    <View>
+        <Header/>
       <Todo/>
     </View>
   )
 }
 
 export default App
-

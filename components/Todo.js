@@ -6,24 +6,40 @@ import {
   View,
   Image,
   FlatList,
+  Keyboard,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {ScrollView} from 'react-native';
-
+// import {ScrollView} from 'react-native';
+import Task from './Task';
 
 const Todo = () => {
-  const [list, setList] = useState([
-    {
-      name:"learn React native"
+  const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
+  const [para, setPara] = useState()
+
+  const handleAddTask = () => {
+    if (task === '') {
+      setPara(true)
+      return null;
+
+    } else {
+      Keyboard.dismiss();
+      setTaskItems([...taskItems, task]);
+      setTask('');
+      setPara(false)
     }
-  ]);
+  };
 
-
- 
+  const deletItem = index => {
+    let itemsCopy = [...taskItems];
+    itemsCopy.splice(index, 1);
+    setTaskItems(itemsCopy);
+  };
 
   return (
-    <View >
+    <View>
       <View style={styles.bgContaner}>
         <Text style={styles.mainHeading}>Todos List</Text>
       </View>
@@ -35,58 +51,21 @@ const Todo = () => {
               <TextInput
                 placeholder="What needs to be done?"
                 style={styles.inputEl}
-               
-            
+                onChangeText={text => setTask(text)}
+                value={task}
               />
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => handleAddTask()}>
               <Text style={styles.btn}>Add</Text>
             </TouchableOpacity>
+            {para && <Text style={styles.error}>*Enter Valid Task</Text>}
           </View>
         </View>
         <View>
           <Text style={styles.mainText}>My Tasks</Text>
-          <FlatList
-            data={list}
-            renderItem={({item, index}) => (
-              <View>
-                <View style={styles.taskCOntainer}>
-                  <View
-                    style={{
-                      width: '10%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}>
-                    <View
-                      style={{
-                        height: 19,
-                        width: 19,
-                        borderWidth: 2,
-                        borderColor: 'black',
-                      }}></View>
-                  </View>
-                  <View style={styles.tastText}>
-                    <View style={styles.textCont}>
-                      <Text style={styles.taskName}>{item.name} </Text>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    <View>
-                      <Image
-                        source={require('../Images/del.png')}
-                        style={{width: 29, height: 25}}
-                      />
-                    </View>
-                  </View>
-                </View>
-              </View>
-            )}
-          />
+          {taskItems.map((item, index) => {
+            return <Task key={index} text={item} deletItem={deletItem} />;
+          })}
           <TouchableOpacity>
             <Text style={styles.btn}>Save</Text>
           </TouchableOpacity>
@@ -103,7 +82,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
- 
+    marginTop: 50,
   },
   mainHeading: {
     width: '50%',
@@ -189,4 +168,9 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
   },
+  error:{
+    fontSize:17,
+    color:"red",
+    marginLeft:15
+  }
 });
