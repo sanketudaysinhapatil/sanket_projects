@@ -30,16 +30,20 @@ export default AppHeader;
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: '#5d87a8',
-    height: 45,
+    height: 60,
     display: 'flex',
     justifyContent: 'start',
     elevation: 15,
-    flexDirection:"row"
+    flexDirection:"row",
+    padding:15
+    
+    
   },
   mainTitle: {
     color: 'white',
     fontSize: 18,
     fontWeight: '700',
     marginLeft: 15,
+    // padding:20
   },
 });
