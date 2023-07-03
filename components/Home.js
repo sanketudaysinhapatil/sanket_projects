@@ -1,17 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import AppHeader from './components/AppHeader'
-import Home from './components/Home'
 
-
-const App = () => {
+const Home = (props) => {
   return (
     <View>
-      <Home cmp={AppHeader}/>
+      <props.cmp/>
     </View>
   )
 }
 
-export default App
+export default Home
 
 const styles = StyleSheet.create({})
